@@ -12,7 +12,9 @@ from django.contrib.auth.models import User
 import sys, os, json, io,  base64, hashlib,re
 from secret.models import Friends
 from secret.serializers import adding_friends
+from secret.decorators import superadmin_required
 entries_per_page = 10
+
 
 def pagination(request,friends):
     try:
@@ -39,6 +41,12 @@ def pagination(request,friends):
     friends_array.append(pages)
     return friends_array
 
+@superadmin_required
+@login_required
+def list_users(request):
+    msg=""
+    return render(request,'angular_crud/list_users.html',{'msg':msg})
+
 @api_view(['GET'])
 def get_user_data(request):
     try:
@@ -60,11 +68,6 @@ def get_user_data(request):
             data = {"status":"500","msg":"Failure"}
     return JsonResponse(data,safe=False)
 
-@login_required
-def list_users(request):
-    msg=""
-    return render(request,'angular_crud/list_users.html',{'msg':msg})
-    
 @api_view(['GET'])
 def delete_user(request):
     msg=""

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'secret.apps.SecretConfig',
     'rest_framework',
     'rest_framework.authtoken',
-    'storages'
+    'storages',
+    'graphene_django'
 ]
 
 MIDDLEWARE = [
@@ -161,3 +162,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+GRAPHENE = {
+    'SCHEMA': 'jangoadmin.schema.schema',
+    'MIDDLEWARES': [
+            'graphql_jwt.middleware.JSONWebTokenMiddleware',
+        ],
+}

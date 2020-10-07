@@ -12,5 +12,7 @@ urlpatterns = [
     path('forgot-password/', ForgotPassword),
     path('logout/', Logout),
     path('home/', Dashboard),
+
+
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)

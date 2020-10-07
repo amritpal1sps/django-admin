@@ -18,6 +18,10 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 
 from frontend.views import Home, ForgotPassword, ResetPassword
+from django.views.decorators.csrf import csrf_exempt
+
+from graphene_django.views import GraphQLView
+from jangoadmin.schema import schema
 
 urlpatterns = [
     #~ path('admin/', admin.site.urls),
@@ -25,5 +29,9 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('forgot-password/', ForgotPassword),
     path('reset-password/<str:token>/', ResetPassword),
-    path('', Home)
+    path('', Home),
+    path('graphql/',csrf_exempt( GraphQLView.as_view(schema=schema, graphiql=True)) )    ,
+    path('create_user/',csrf_exempt( GraphQLView.as_view(schema=schema, graphiql=True)) )    ,
+
+
 ]

@@ -12,11 +12,15 @@ def Dashboard(request):
 
 def Login(request):
     msg = ""
+    request.session['role']=''
     if(request.method=="POST"):
         user = auth.authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
         if user:
             if user.is_superuser:
                 auth.login(request, user)
+                request.session['id']=user.id
+                request.session['name']=user.username
+                request.session['role'] =user.is_superuser
                 return redirect("/secret/")
             else:
                 msg = "Login from Mobile App!"

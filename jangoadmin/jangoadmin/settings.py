@@ -129,6 +129,18 @@ DATABASES = {
     }
 }
 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': config('DBNAME', default='jangoadmin'),
+#         'USER': config('DBUSR', default='root'),
+#         'PASSWORD': config('DBPWD', default='root'),
+#         'HOST': config('DBHOST', default='localhost'),
+#     }
+# }
+
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -162,6 +174,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 AUTHENTICATION_BACKENDS = [
@@ -175,4 +188,23 @@ GRAPHENE = {
     'MIDDLEWARES': [
             'graphql_jwt.middleware.JSONWebTokenMiddleware',
         ],
+}
+
+GRAPHENE = {
+    'SCHEMA': 'jangoadmin.schema.schema', # this file doesn't exist yet
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
+
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": True,
+
+    # optional
+    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
 }

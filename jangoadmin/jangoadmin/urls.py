@@ -30,8 +30,11 @@ urlpatterns = [
     path('forgot-password/', ForgotPassword),
     path('reset-password/<str:token>/', ResetPassword),
     path('', Home),
-    path('graphql/',csrf_exempt( GraphQLView.as_view(schema=schema, graphiql=True)) )    ,
-    path('create_user/',csrf_exempt( GraphQLView.as_view(schema=schema, graphiql=True)) )    ,
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
+    path('create_user/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+
+    # path('graphql/',csrf_exempt( GraphQLView.as_view(schema=schema, graphiql=True)) )    ,
+    # path('create_user/',csrf_exempt( GraphQLView.as_view(schema=schema, graphiql=True)) )    ,
 
 
 ]

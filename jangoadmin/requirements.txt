@@ -17,7 +17,6 @@ graphql-core==2.3.2
 graphql-relay==2.0.1
 jmespath==0.10.0
 mysqlclient==1.4.6
-pkg-resources==0.0.0
 promise==2.3
 PyJWT==1.7.1
 python-dateutil==2.8.1

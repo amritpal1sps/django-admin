@@ -2,7 +2,10 @@ import graphene
 from graphene_django import DjangoObjectType
 from django.db.models import Q
 from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http.response import HttpResponseBadRequest
 
+from graphql import GraphQLError
 
 class Usermodel(DjangoObjectType):
     class Meta:
@@ -29,7 +32,14 @@ class Query(graphene.ObjectType):
         return all_users
 
 
-  
+
+
+class HttpError(Exception):
+    def __init__(self, response, message=None, *args, **kwargs):
+        self.response = response
+        self.message = message = message or response.content.decode()
+        super(HttpError, self).__init__(message, *args, **kwargs)
+
 
 
 
@@ -42,10 +52,34 @@ class Create_User(graphene.Mutation):
 
     user = graphene.Field(Usermodel)
     def mutate(root,info,username,password,first_name,email):
-        message=""
-        user_instance =User(username= username,password=password,email=email, first_name=first_name)
-        user_instance.save()
-        return Create_User(user=user_instance,message="USer created")
+        try:
+            check_user_exist = User.objects.filter(username = username)
+            if check_user_exist:
+                raise HttpError(
+                    HttpResponseNotAllowed(
+                        ["POST"],
+                        "Can only perform a {} operation from a POST request.".format(
+                            'jjjjjjjjjjjjjjj'
+                        ),
+                    )
+                )
+                return
+
+            user_instance =User(username= username,password=password,email=email, first_name=first_name)
+            user_instance.save()
+            return Create_User(user=user_instance,message="USer created")
+        except Exception as e:
+            print("\n" *3)
+            print("error is ->", e)
+            raise HttpError(
+                    HttpResponseNotAllowed(
+                        ["POST"],
+                        'Something Went Wrong, Please try again laters'
+                    )
+                )
+            return 
+
+
 
 
 

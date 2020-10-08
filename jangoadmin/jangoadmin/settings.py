@@ -114,20 +114,38 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': config('DBNAME', default='jangoadmin'),
+#         'USER': config('DBUSR', default='root'),
+#         'PASSWORD': config('DBPWD', default='root'),
+#         'HOST': config('DBHOST', default='localhost'),
+#         'PORT': 3306,
+#         'OPTIONS': {
+#             'sql_mode': 'traditional',
+#             'init_command': "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
+#         }
+#     }
+# }
+
+
+
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DBNAME', default='jangoadmin'),
-        'USER': config('DBUSR', default='root'),
-        'PASSWORD': config('DBPWD', default='root'),
-        'HOST': config('DBHOST', default='localhost'),
-        'PORT': 3306,
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-            'init_command': "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
-        }
+        'ENGINE': 'djongo',
+        'NAME': config('DBNAME', default='amrit'),
+        # 'USER': config('DBUSR', default='admin'),
+        # 'PASSWORD': config('DBPWD', default='admin'),
+        # 'HOST': config('DBHOST', default='localhost'),
+      
     }
 }
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
